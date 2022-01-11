@@ -4,6 +4,14 @@ namespace SpriteKind {
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.vy = -300
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`cage`, function (sprite, location) {
+    info.changeScoreBy(1)
+    tiles.setTileAt(location, assets.tile`transparency16`)
+    turkey = sprites.create(assets.image`turkey`, SpriteKind.Rescued)
+    tiles.placeOnTile(turkey, location)
+    turkey.follow(mySprite)
+})
+let turkey: Sprite = null
 let mySprite: Sprite = null
 scene.setBackgroundColor(9)
 tiles.setTilemap(tilemap`level1`)

@@ -2,7 +2,8 @@
     "name": "Move the Turkey #2",
     "description": "",
     "dependencies": {
-        "device": "*"
+        "device": "*",
+        "animation": "*"
     },
     "files": [
         "main.blocks",
