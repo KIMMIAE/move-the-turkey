@@ -3,7 +3,10 @@
     "description": "",
     "dependencies": {
         "device": "*",
-        "animation": "*"
+        "animation": "*",
+        "corgio": "*",
+        "darts": "*",
+        "controller": "*"
     },
     "files": [
         "main.blocks",
