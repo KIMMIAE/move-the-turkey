@@ -16,7 +16,15 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`cage`, function (sprite, loca
     music.baDing.play()
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.swamp.swampTile16, function (sprite, location) {
-    game.over(true)
+    game.over(true, effects.confetti)
+})
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.purpleSwitchUp, function (sprite, location) {
+    tiles.setTileAt(tiles.getTileLocation(14, 11), assets.tile`myTile6`)
+    tiles.setTileAt(tiles.getTileLocation(7, 2), assets.tile`transparency16`)
+    tiles.setTileAt(tiles.getTileLocation(8, 2), assets.tile`transparency16`)
+    tiles.setWallAt(tiles.getTileLocation(7, 2), false)
+    tiles.setWallAt(tiles.getTileLocation(8, 2), false)
+    music.buzzer.play()
 })
 let turkey: Sprite = null
 let mySprite: Sprite = null
@@ -268,6 +276,7 @@ scene.setBackgroundImage(img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
     `)
 tiles.setTilemap(tilemap`level1`)
+tiles.setWallAt(tiles.getTileLocation(13, 0), false)
 mySprite = sprites.create(assets.image`player`, SpriteKind.Player)
 controller.moveSprite(mySprite)
 mySprite.ay = 500
