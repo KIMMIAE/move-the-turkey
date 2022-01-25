@@ -1,3 +1,8 @@
+enum ActionKind {
+    Walking,
+    Idle,
+    Jumping
+}
 namespace SpriteKind {
     export const Rescued = SpriteKind.create()
 }
@@ -19,12 +24,17 @@ scene.onOverlapTile(SpriteKind.Player, sprites.swamp.swampTile16, function (spri
     game.over(true, effects.confetti)
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.purpleSwitchUp, function (sprite, location) {
-    tiles.setTileAt(tiles.getTileLocation(14, 11), assets.tile`myTile6`)
-    tiles.setTileAt(tiles.getTileLocation(7, 2), assets.tile`transparency16`)
-    tiles.setTileAt(tiles.getTileLocation(8, 2), assets.tile`transparency16`)
-    tiles.setWallAt(tiles.getTileLocation(7, 2), false)
-    tiles.setWallAt(tiles.getTileLocation(8, 2), false)
-    music.buzzer.play()
+    if (info.score() == 15) {
+        tiles.setTileAt(tiles.getTileLocation(14, 11), assets.tile`myTile6`)
+        tiles.setTileAt(tiles.getTileLocation(7, 2), assets.tile`transparency16`)
+        tiles.setTileAt(tiles.getTileLocation(8, 2), assets.tile`transparency16`)
+        tiles.setWallAt(tiles.getTileLocation(7, 2), false)
+        tiles.setWallAt(tiles.getTileLocation(8, 2), false)
+        music.buzzer.play()
+    } else {
+        game.showLongText("" + (15 - info.score()) + "마리가 아직 갇혀있어!", DialogLayout.Bottom)
+        tiles.placeOnTile(mySprite, tiles.getTileLocation(12, 11))
+    }
 })
 let turkey: Sprite = null
 let mySprite: Sprite = null
