@@ -6,6 +6,12 @@ enum ActionKind {
 namespace SpriteKind {
     export const Rescued = SpriteKind.create()
 }
+function set_level () {
+    level += 1
+    if (level == 2) {
+        tiles.setTilemap(tilemap`level5`)
+    }
+}
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.vy = -300
 })
@@ -21,7 +27,8 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`cage`, function (sprite, loca
     music.baDing.play()
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.swamp.swampTile16, function (sprite, location) {
-    game.over(true, effects.confetti)
+    effects.confetti.endScreenEffect()
+    set_level()
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.purpleSwitchUp, function (sprite, location) {
     if (info.score() == 15) {
@@ -38,6 +45,7 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.purpleSwitchUp, function 
 })
 let turkey: Sprite = null
 let mySprite: Sprite = null
+let level = 0
 scene.setBackgroundImage(img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -163,6 +171,7 @@ scene.setBackgroundImage(img`
 tiles.setTilemap(tilemap`level3`)
 music.playMelody("C D F A A F D E ", 280)
 game.showLongText("칠면조 구하기 게임. 게임에 대한 설명을 작성해주세요.", DialogLayout.Bottom)
+level = 1
 scene.setBackgroundImage(img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
