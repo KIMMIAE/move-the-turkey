@@ -43,9 +43,11 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.purpleSwitchUp, function 
         tiles.placeOnTile(mySprite, tiles.getTileLocation(12, 11))
     }
 })
+let beat = 0
 let turkey: Sprite = null
 let mySprite: Sprite = null
 let level = 0
+let playing = false
 scene.setBackgroundImage(img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -302,3 +304,75 @@ mySprite.ay = 500
 scene.cameraFollowSprite(mySprite)
 tiles.placeOnRandomTile(mySprite, assets.tile`start`)
 info.startCountdown(120)
+const hihat = new music.Melody("@0,50,0,0 ~5 c8-240 c8 c c c c c @0,250,0,0 c")
+const snare = new music.Melody("@10,75,0,0 ~4 g3-240 r g5 r g3 r g5 r")
+const b1 = new music.Melody("@10,120,80,0 ~15 c2-120 e g a c3 a2 g e")
+const b4 = new music.Melody("@10,120,80,0 ~15 f2-120 a c3 d f d c a2")
+const b5 = new music.Melody("@10,120,80,0 ~15 g2-120 b d3 e g e d b2")
+const g0 = new music.Melody("@100,100,160,0 ~15 r-120 r r r r r r r")
+const g1a = new music.Melody("@100,100,160,0 ~15 c4-240 g r r c5 g r r c5 b4 g4 f# e d#-120 e-240")
+const g1b = new music.Melody("@100,100,160,0 ~15 c4-240 r f# g r g r r f# f r d# r c-120")
+const g4 = new music.Melody("@100,100,160,0 ~15 f4-120 r f a# b a# f5-60")
+const g5 = new music.Melody("@100,100,160,0 ~15 r-120 g4 r g d5 c# d g")
+let positions = [
+0,
+0,
+0,
+0
+]
+let lengths = [
+1,
+1,
+2,
+2
+]
+let volumes = [
+50,
+100,
+80,
+90
+]
+let tracks: Array[] = [
+[hihat],
+[snare],
+[
+b1,
+b1,
+b1,
+b1,
+b4,
+b4,
+b1,
+b1,
+b5,
+b4,
+b1,
+b1
+],
+[
+g0,
+g1a,
+g1b,
+g1a,
+g4,
+g4,
+g1a,
+g1b,
+g5,
+g4,
+g1a,
+g1b
+]
+]
+game.onUpdateInterval(1000 * 60 / 240 * 8, function () {
+    for (let track = 0; track <= 3; track++) {
+        if (beat % lengths[track] == 0) {
+            tracks[track][positions[track]].play(volumes[track])
+++positions[track]
+if (positions[track] >= tracks[track].length) {
+                positions[track] = 0
+            }
+        }
+    }
+    beat += 1
+})
