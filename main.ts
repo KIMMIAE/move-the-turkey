@@ -332,7 +332,7 @@ let volumes = [
 80,
 90
 ]
-let tracks: Array[] = [
+let tracks = [
 [hihat],
 [snare],
 [
